@@ -6,7 +6,7 @@
 
 > ## Domain Aware Universal Style Transfer
 > 
-> Kibeom Hong (Yonsei Univ.), Seokgyu Jeon (Yonsei Univ.), Jianlong Fu (Microsoft Research), Huan Yang (Microsoft Research), Hyeran Byun (Yonsei Univ.)
+> Kibeom Hong (Yonsei Univ.), Seogkyu Jeon (Yonsei Univ.), Jianlong Fu (Microsoft Research), Huan Yang (Microsoft Research), Hyeran Byun (Yonsei Univ.)
 >
 > Paper : 
 > 
