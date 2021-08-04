@@ -1,0 +1,7 @@
+torch=1.7.0
+torchvision==0.8.0
+tqdm==4.54.1
+numpy==1.19.2
+Pillow==8.0.1
+imageio==2.9.0
+scipy==1.5.2
