@@ -53,7 +53,7 @@ bash scripts/transfer_adversarial.sh
 ```
 
 #### Training
-To be continue
+Available soon
 
 ## Ciation
 If you find this work useful for your research, please cite:
