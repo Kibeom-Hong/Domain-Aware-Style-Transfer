@@ -28,7 +28,7 @@ pip install -r requirements.txt
 ## Usage
 #### Set pretrained weights
 * Pretrained models for encoder(VGG-19) can be found in the `./baseline_checkpoints`
-- Prepare pretrained models for **Dominnes Indicator**
+- Prepare pretrained models for **Domainnes Indicator**
   -  Domainnes Indicator can be downloaded at [style_indicator.pth](https://drive.google.com/file/d/1-rf2CdrCr9ei9KS-V0H3kjo1oaPmT5Xz/view?usp=sharing)
 - Prepare pretrained models for **Decoder**
   -  Vanilla version can be downloaded at [Deocder.pth](https://drive.google.com/file/d/1tlUTBHB_rg9eRDa-wi1xPkbtBHGs1CUQ/view?usp=sharing)
