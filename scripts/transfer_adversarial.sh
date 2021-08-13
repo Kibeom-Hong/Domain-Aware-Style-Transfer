@@ -3,12 +3,10 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     --batch_size 1 \
     --model_type baseline \
     --DA_comment StyleIndicator \
-    --ST_comment Decoder \
+    --ST_comment Decoder_adversarial \
     --is_da_train False \
     --is_st_train False \
-    --decoder_trained_epoch 10000 \
-    --DA_Net_trained_epoch 98765 \
     --test_content './test_images/content/' \
     --test_p_reference './test_images/origin_p_reference/' \
-    --test_a_reference './test_images/origin_a_reference/'           
-
+    --test_a_reference './test_images/origin_a_reference/'
+        

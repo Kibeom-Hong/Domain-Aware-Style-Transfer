@@ -10,9 +10,7 @@ def str2bool(v):
 
 
 if __name__=='__main__':
-	parser = argparse.ArgumentParser(description='Photorealistic Image Stylization')
-	parser.add_argument('--p_wct_model', default='./PhotoWCTModels/photo_wct.pth')
-	parser.add_argument('--avatar_model', default='./baseline_checkpoints/check_point.pth')
+	parser = argparse.ArgumentParser(description='Domain Aware Universal Style Transfer')
 	
 	parser.add_argument('--output_image_path', default='./results')
 	parser.add_argument('--content_dir', type=str, default='../../dataset/MSCoCo', help='Content data path to train the network')
@@ -38,17 +36,7 @@ if __name__=='__main__':
 	parser.add_argument('--DA_comment', type=str)
 	parser.add_argument('--ST_comment', type=str)
 	parser.add_argument('--model_type', type=str)
-	parser.add_argument('--option_unpool', type=str, default='sum', choices=['sum', 'cat5'])
-	parser.add_argument('--content_test', type=str, default='./images/test_content/')
-	parser.add_argument('--style_p_test', type=str, default='./images/test_style/')
-	parser.add_argument('--style_a_test', type=str, default='./images/test_style_art/')
-	parser.add_argument('--wct2_test', type=str, default='./images/test_wct2/')
-	parser.add_argument('--avatar_test', type=str, default='./images/test_avatar/')
-	parser.add_argument('--wct2_test_art', type=str, default='./images/test_wct2_art/')
-	parser.add_argument('--avatar_test_photo', type=str, default='./images/test_avatar_photo/')
-
 	parser.add_argument('--test_content', type=str, default='./test_images/content/')
-	parser.add_argument('--video_test', type=str, default='./test_images/content_video/')
 	parser.add_argument('--test_a_reference', type=str, default='./test_images/a_reference/')
 	parser.add_argument('--test_p_reference', type=str, default='./test_images/p_reference/')
 	parser.add_argument('--test_content_segment', type=str, default='./test_images/content/')
@@ -75,20 +63,10 @@ if __name__=='__main__':
 		model.transfer(args)
 	elif args.type == 'transfer_iterative':
 		model.transfer_iterative(args)
-	elif args.type == 'video_transfer':
-		model.video_transfer(args)	
-	elif args.type == 'other_transfer':
-		model.other_transfer(args)	
 	elif args.type == 'eval':
 		model.eval(args)
 	elif args.type == 'interpolate':
 		model.interpolate(args)
-	elif args.type == 'test_accuracy':
-		model.test_accuracy(args)
-	elif args.type == 'art_transfer':
-		model.art_transfer(args)
-	elif args.type == 'calculation_time':
-		model.calculation_time(args)
 		
 		
 

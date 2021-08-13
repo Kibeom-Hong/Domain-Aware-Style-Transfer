@@ -59,14 +59,6 @@ class Baseline(object):
 		self.ST_comment = args.ST_comment
 		self.max_iter = args.max_iter
 		self.check_iter = args.check_iter
-
-		self.content_test = args.content_test
-		self.style_p_test = args.style_p_test
-		self.style_a_test = args.style_a_test
-		self.wct2_testset = args.wct2_test
-		self.wct2_art_testset = args.wct2_test_art
-		self.avatar_testset = args.avatar_test
-		self.avatar_photo_testset = args.avatar_test_photo
 		self.args = args
 
 		self.is_da_train = args.is_da_train
@@ -86,8 +78,8 @@ class Baseline(object):
 		self.MSD_img = MultiScaleImageDiscriminator(nc=3, ndf=64)
 		self.MSD_img.cuda()
 		
-		self.DA_Net_trained_epoch = args.DA_Net_trained_epoch
-		self.decoder_trained_epoch = args.decoder_trained_epoch
+		#self.DA_Net_trained_epoch = args.DA_Net_trained_epoch
+		#self.decoder_trained_epoch = args.decoder_trained_epoch
 
 		
 
@@ -260,7 +252,7 @@ class Baseline(object):
 				####Load pretrained_DA_model ###
 				####    Get Alpha value     ####
 				################################
-				self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'model_'+str(self.DA_Net_trained_epoch)+'.pth'))['state_dict']) #28000
+				self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'style_indicator.pth'))['state_dict'])
 				
 				###############################
 				####Step 2 : Reconstruction ###
@@ -358,8 +350,8 @@ class Baseline(object):
 				
 
 	def transfer(self, args):
-		self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'model_'+str(self.DA_Net_trained_epoch)+'.pth'))['state_dict']) #28000
-		self.network.load_state_dict(torch.load(os.path.join(self.result_st_dir, 'model_'+str(self.decoder_trained_epoch)+'.pth'))['state_dict'])
+		self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'style_indicator.pth'))['state_dict'])
+		self.network.load_state_dict(torch.load(os.path.join(self.result_st_dir, 'decoder.pth'))['state_dict'])
 		
 		
 		content_set = Transfer_TestDataset(args.test_content, (256,512), self.cropsize, self.cencrop, type='art', is_test=True)
@@ -376,7 +368,7 @@ class Baseline(object):
 		self.network.train(False)
 		self.network.eval()
 
-		dir_path = os.path.join(self.result_img_dir, 'transfer', self.DA_comment+'_'+str(self.DA_Net_trained_epoch)+'_'+str(self.decoder_trained_epoch))
+		dir_path = os.path.join(self.result_img_dir, 'transfer', self.DA_comment+'_'+self.ST_comment)
 		if not os.path.exists(dir_path):
 			os.makedirs(dir_path)
 
@@ -406,8 +398,8 @@ class Baseline(object):
 			time.sleep(0.2)
 
 	def transfer_iterative(self, args):
-		self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'model_'+str(self.DA_Net_trained_epoch)+'.pth'))['state_dict']) #28000
-		self.network.load_state_dict(torch.load(os.path.join(self.result_st_dir, 'model_'+str(self.decoder_trained_epoch)+'.pth'))['state_dict'])
+		self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'style_indicator.pth'))['state_dict'])
+		self.network.load_state_dict(torch.load(os.path.join(self.result_st_dir, 'decoder.pth'))['state_dict'])
 		
 		
 		content_set = Transfer_TestDataset(args.test_content, (256,512), self.cropsize, self.cencrop, is_test=True)
@@ -424,7 +416,7 @@ class Baseline(object):
 		self.network.train(False)
 		self.network.eval()
 
-		dir_path = os.path.join(self.result_img_dir, 'transfer', self.DA_comment+'_'+str(self.DA_Net_trained_epoch)+'_'+str(self.decoder_trained_epoch))
+		dir_path = os.path.join(self.result_img_dir, 'transfer',  self.DA_comment+'_'+self.ST_comment)
 		if not os.path.exists(dir_path):
 			os.makedirs(dir_path)
 
@@ -474,64 +466,6 @@ class Baseline(object):
 			time.sleep(0.1)
 			photo_iter = iter(photo_reference_loader)
 
-	def calculation_time(self, args):
-		self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'model_'+str(self.DA_Net_trained_epoch)+'.pth'))['state_dict']) #28000
-		self.network.load_state_dict(torch.load(os.path.join(self.result_st_dir, 'model_'+str(self.decoder_trained_epoch)+'.pth'))['state_dict'])
-		
-		size = [256,512,1024]
-		self.DA_Net.train(False)
-		self.DA_Net.eval()
-		self.network.train(False)
-		self.network.eval()
-
-		for size_ in size:
-			dir_path = os.path.join(self.result_img_dir, 'calculation_time', self.DA_comment+'_'+str(self.DA_Net_trained_epoch)+'_'+str(self.decoder_trained_epoch), str(size_))
-			if not os.path.exists(dir_path):
-				os.makedirs(dir_path)
-
-			content_set = Transfer_TestDataset(args.test_content, (size_,size_), is_test=False)
-			art_reference_set = Transfer_TestDataset(args.test_a_reference, (size_,size_), type='art', is_test=False)
-			photo_reference_set = Transfer_TestDataset(args.test_p_reference, (size_,size_), type='art', is_test=False)
-			
-			content_loader = torch.utils.data.DataLoader(content_set, batch_size=self.batch_size, shuffle=False, drop_last=True, num_workers=self.num_workers)
-			art_reference_loader = torch.utils.data.DataLoader(art_reference_set, batch_size=self.batch_size, shuffle=False, drop_last=True, num_workers=self.num_workers)
-			photo_reference_loader = torch.utils.data.DataLoader(photo_reference_set, batch_size=self.batch_size, shuffle=False, drop_last=True, num_workers=self.num_workers)
-			N = art_reference_set.__len__()
-			content_iter = iter(content_loader)
-			art_iter = iter(art_reference_loader)
-			photo_iter = iter(photo_reference_loader)
-			art_time = []
-			photo_time = []
-			for iteration in range(N//self.batch_size):
-				with torch.no_grad():
-					empty_segment = np.asarray([])
-					content = next(content_iter).cuda()
-					a_reference = next(art_iter).cuda()
-					p_reference = next(photo_iter).cuda()
-
-					start = timeit.default_timer()
-					art_alphas = self.get_alphas(a_reference)
-					art_stylized_output = self.network(content, a_reference, empty_segment, empty_segment, is_recon=True, alphas=art_alphas, type='photo')
-					stop = timeit.default_timer()
-					art_time.append((stop-start))
-					#print('art : ' , stop-start)
-
-					start = timeit.default_timer()
-					photo_alphas = self.get_alphas(p_reference)
-					photo_stylized_output = self.network(content, p_reference, empty_segment, empty_segment, is_recon=True, alphas=photo_alphas, type='photo')
-					stop = timeit.default_timer()
-					photo_time.append((stop-start))
-					#print('photo : ' , stop-start)
-					imsave(content,  os.path.join(dir_path,  'single_content_'+str(iteration)+'.png'), nrow=self.batch_size )
-					imsave(a_reference,  os.path.join(dir_path, 'single_p_reference_'+str(iteration)+'.png'), nrow=self.batch_size )
-					imsave(p_reference,  os.path.join(dir_path,  'single_a_reference_'+str(iteration)+'.png'), nrow=self.batch_size )
-					imsave(photo_stylized_output,  os.path.join(dir_path, 'single_photo_stylized_'+str(iteration)+'.png'), nrow=self.batch_size )
-				del content, a_reference, p_reference, art_stylized_output, photo_stylized_output
-				torch.cuda.empty_cache()
-				time.sleep(0.2)
-			print('img size :', str(size_))
-			print('art avg :', np.mean(art_time))
-			print('photo avg :', np.mean(photo_time))
 
 	def transfer_seg(self, args):
 		from baseline_models_seg import Baseline_net as Baseline_net_seg
@@ -540,22 +474,21 @@ class Baseline(object):
 		self.network.cuda()
 
 
-		self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'model_'+str(self.DA_Net_trained_epoch)+'.pth'))['state_dict']) #28000
-		self.network.load_state_dict(torch.load(os.path.join(self.result_st_dir, 'model_'+str(self.decoder_trained_epoch)+'.pth'))['state_dict'])
+		self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'style_indicator.pth'))['state_dict'])
+		self.network.load_state_dict(torch.load(os.path.join(self.result_st_dir, 'decoder.pth'))['state_dict'])
 		
 		self.DA_Net.train(False)
 		self.DA_Net.eval()
 		self.network.train(False)
 		self.network.eval()
 
-		dir_path = os.path.join(self.result_img_dir, 'transfer_seg2', self.DA_comment+'_'+str(self.DA_Net_trained_epoch)+'_'+str(self.decoder_trained_epoch))
+		dir_path = os.path.join(self.result_img_dir, 'transfer_seg2',  self.DA_comment+'_'+self.ST_comment)
 		if not os.path.exists(dir_path):
 			os.makedirs(dir_path)
 		for fname in tqdm.tqdm(range(0,60)):
 			content_fname = 'single_content_'+str(fname)+'.png'
 			style_fname = 'single_p_reference_'+str(fname)+'.png'
-			#content_fname = str(fname)+'.png'
-			#style_fname = str(fname)+'.png'
+			
 			content_segment_fname = 'in'+str(fname)+'.png'
 			style_segment_fname = 'tar'+str(fname)+'.png'
 			output_fname = str(fname)+'.png'
@@ -587,24 +520,12 @@ class Baseline(object):
 
 	def get_alphas(self, imgs):
 		self.DA_Net.eval()
-		if self.DA_comment == 'New_DA_Net_v2':
-			with torch.no_grad():
-				feats = []
-				for level in [1,2,3]: #2,3,4
-					feats.append(self.network.encoder.get_features(imgs, level))
-				alphas = torch.sigmoid(self.DA_Net(feats)).squeeze(2).squeeze(2).repeat(1,3)
-
-		if self.DA_comment in ['New_DA_Net_v1', 'New_DA_Net_v3', 'New_DA_Net_v1_mixup', 'New_DA_Net_v1_mixup_weighted_loss', 'New_DA_Net_v1_mixup_256', 'New_DA_Net_v1_no_mixup_no_dlow']:
-			with torch.no_grad():
-				alphas = []
-				for level in [1,2,3]: #2,3,4
-					feat = self.network.encoder.get_features(imgs, level)
-					alphas.append(torch.sigmoid(self.DA_Net(feat, level)))
-					#alphas.append(torch.softmax(torch.sigmoid(self.DA_Net(feat, level)), dim=0))
-
-				if self.DA_comment in ['New_DA_Net_v1', 'New_DA_Net_v3', 'New_DA_Net_v1_mixup', 'New_DA_Net_v1_mixup_weighted_loss', 'New_DA_Net_v1_mixup_256', 'New_DA_Net_v1_no_mixup_no_dlow']:
-					alphas = torch.stack(alphas).unsqueeze(0).cuda()
-				else:
-					alphas = torch.stack(alphas, dim=2).squeeze(1).cuda()
+		with torch.no_grad():
+			alphas = []
+			for level in [1,2,3]: #2,3,4
+				feat = self.network.encoder.get_features(imgs, level)
+				alphas.append(torch.sigmoid(self.DA_Net(feat, level)))
+			alphas = torch.stack(alphas).unsqueeze(0).cuda()
+			
 
 		return alphas
