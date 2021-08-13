@@ -26,15 +26,45 @@ pip install -r requirements.txt
 ```
 
 ## Usuage
-#### Inference (Automatic)
-#### Inference (User guided)
-#### Training
+#### Set pretrained weights
+* Pretrained models for encoder(VGG-19) can be found in the `./baseline_checkpoints`
+- Prepare pretrained models for **Dominnes Indicator**
+  -  Domainnes Indicator can be downloaded at [style_indicator.pth](https://drive.google.com/file/d/1-rf2CdrCr9ei9KS-V0H3kjo1oaPmT5Xz/view?usp=sharing)
+- Prepare pretrained models for **Decoder**
+  -  Vanilla version can be downloaded at [Deocder.pth](https://drive.google.com/file/d/1tlUTBHB_rg9eRDa-wi1xPkbtBHGs1CUQ/view?usp=sharing)
+  -  Adversarial version can be downloaded at [Deocder_adversarial.pth](https://drive.google.com/file/d/1lMCtPR-ZZUqJ1MHExXoTmCTO3K34rCCz/view?usp=sharing)
 
+- Move these pretrained weights to each folders:
+  - style_indicator.pth -> `./train_results/StyleIndicator/log/`
+  - decoder.pth -> `./train_results/Decoder/log/`
+  - decoder_adversarial.pth -> `./train_results/Decoder_adversarial/log/` 
+ 
+  **(Please rename decoder_adversarial.pth -> decoder.pth)**
+
+#### Inference (Automatic)
+- Vanilla decoder
+```
+bash scripts/transfer.sh
+```
+
+- Decoder with adversarial loss
+```
+bash scripts/transfer_adversarial.sh
+```
+
+#### Training
+To be continue
 
 ## Ciation
 If you find this work useful for your research, please cite:
 ```
-citation
+@article{Hong2021DomainAwareUS,
+  title={Domain-Aware Universal Style Transfer},
+  author={Kibeom Hong and Seogkyu Jeon and Huan Yang and Jianlong Fu and H. Byun},
+  journal={ArXiv},
+  year={2021},
+  volume={abs/2108.04441}
+}
 ```
 
 ## Contact
