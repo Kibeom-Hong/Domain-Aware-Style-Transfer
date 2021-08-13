@@ -55,6 +55,11 @@ bash scripts/transfer_adversarial.sh
 #### Training
 Available soon
 
+
+#### Evaluation
+Available soon
+
+
 ## Ciation
 If you find this work useful for your research, please cite:
 ```
