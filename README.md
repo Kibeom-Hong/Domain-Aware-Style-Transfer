@@ -31,8 +31,8 @@ pip install -r requirements.txt
 - Prepare pretrained models for **Domainnes Indicator**
   -  Domainnes Indicator can be downloaded at [style_indicator.pth](https://drive.google.com/file/d/1-rf2CdrCr9ei9KS-V0H3kjo1oaPmT5Xz/view?usp=sharing)
 - Prepare pretrained models for **Decoder**
-  -  Vanilla version can be downloaded at [Deocder.pth](https://drive.google.com/file/d/1tlUTBHB_rg9eRDa-wi1xPkbtBHGs1CUQ/view?usp=sharing)
-  -  Adversarial version can be downloaded at [Deocder_adversarial.pth](https://drive.google.com/file/d/1lMCtPR-ZZUqJ1MHExXoTmCTO3K34rCCz/view?usp=sharing)
+  -  Vanilla version can be downloaded at [Decoder.pth](https://drive.google.com/file/d/1tlUTBHB_rg9eRDa-wi1xPkbtBHGs1CUQ/view?usp=sharing)
+  -  Adversarial version can be downloaded at [Decoder_adversarial.pth](https://drive.google.com/file/d/1lMCtPR-ZZUqJ1MHExXoTmCTO3K34rCCz/view?usp=sharing)
 
 - Move these pretrained weights to each folders:
   - style_indicator.pth -> `./train_results/StyleIndicator/log/`
