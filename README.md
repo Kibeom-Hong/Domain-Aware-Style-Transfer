@@ -68,6 +68,6 @@ If you find this work useful for your research, please cite:
 ```
 
 ## Contact
-If you have any question or comment, please contacth the first author of this paper - Kibeom Hong
+If you have any question or comment, please contact the first author of this paper - Kibeom Hong
 
 [cha2068@yonsei.ac.kr](cha2068@yonsei.ac.kr)
