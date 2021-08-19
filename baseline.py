@@ -491,6 +491,70 @@ class Baseline(object):
 				time.sleep(0.2)
 
 
+	def interpolate(self, args):
+		#################################
+		########## Ours load ############
+		#################################
+		self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'model_'+str(self.DA_Net_trained_epoch)+'.pth'))['state_dict'])
+		self.network.load_state_dict(torch.load(os.path.join(self.result_st_dir, 'model_'+str(self.decoder_trained_epoch)+'.pth'))['state_dict'])
+
+		content_set = Transfer_TestDataset(args.test_content, (1080,1920), self.cropsize, self.cencrop, is_test=True)
+		art_reference_set = Transfer_TestDataset(args.test_a_reference, (256,512), self.cropsize, self.cencrop, type='art', is_test=True)
+		photo_reference_set = Transfer_TestDataset(args.test_p_reference, (256,512), self.cropsize, self.cencrop, type='art', is_test=True)
+		
+		content_loader = torch.utils.data.DataLoader(content_set, batch_size=self.batch_size, shuffle=False, drop_last=True, num_workers=self.num_workers)
+		art_reference_loader = torch.utils.data.DataLoader(art_reference_set, batch_size=self.batch_size, shuffle=False, drop_last=True, num_workers=self.num_workers)
+		photo_reference_loader = torch.utils.data.DataLoader(photo_reference_set, batch_size=self.batch_size, shuffle=False, drop_last=True, num_workers=self.num_workers)
+		
+
+		self.DA_Net.train(False)
+		self.DA_Net.eval()
+		self.network.train(False)
+		self.network.encoder.eval()
+		
+		content_loader_iter = iter(content_loader)
+		art_reference_loader_iter = iter(art_reference_loader)
+		photo_reference_loader_iter = iter(photo_reference_loader)
+		empty_segment = np.asarray([])
+
+		dir_path = os.path.join(self.result_img_dir, 'interpolate', ,  self.DA_comment+'_'+self.ST_comment)
+
+		
+		N = art_reference_set.__len__()
+		content_iter = iter(content_loader)
+		art_iter = iter(art_reference_loader)
+		photo_iter = iter(photo_reference_loader)
+		for iteration in range(N//self.batch_size):
+			with torch.no_grad():
+				empty_segment = np.asarray([])
+				content = next(content_iter).cuda()
+				a_reference = next(art_iter).cuda()
+				p_reference = next(photo_iter).cuda()
+
+			_dir_path = os.path.join(dir_path, str(iteration))
+			if not os.path.exists(_dir_path):
+				os.makedirs(_dir_path)
+			
+			photo_diff = []
+			art_diff = []
+			imsave(content,  os.path.join(_dir_path, 'content.png'), nrow=self.batch_size)
+			imsave(p_reference,  os.path.join(_dir_path, 'p_reference.png'), nrow=self.batch_size)
+			imsave(a_reference,  os.path.join(_dir_path, 'a_reference.png'), nrow=self.batch_size)
+
+			for itr, v in enumerate(np.linspace(0, 1, 11)):
+				alphas = torch.ones(args.batch_size, 1).repeat(1, 3)*v
+				photo_results = self.network(content, p_reference, empty_segment, empty_segment, is_recon=True, alphas=alphas, type='photo')
+				art_results = self.network(content, a_reference, empty_segment, empty_segment, is_recon=True, alphas=alphas, type='photo')
+
+				imsave(photo_results,  os.path.join(_dir_path, 'photo_interpolate_stylized_'+str(v)+'.png'), nrow=self.batch_size)
+				imsave(art_results,  os.path.join(_dir_path, 'art_interpolate_stylized_'+str(v)+'.png'), nrow=self.batch_size)
+				imsave(torch.sigmoid(get_HH_LL(photo_results)[0]*30),  os.path.join(_dir_path, 'photo_HH_'+str(v)+'.png'), nrow=self.batch_size)
+				imsave(torch.sigmoid(get_HH_LL(art_results)[0]*30),  os.path.join(_dir_path, 'art_HH_'+str(v)+'.png'), nrow=self.batch_size)
+
+				del photo_results, art_results
+				torch.cuda.empty_cache()
+		
+
 	def get_alphas(self, imgs):
 		self.DA_Net.eval()
 		with torch.no_grad():
