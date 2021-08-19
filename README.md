@@ -64,7 +64,7 @@ bash scripts/transfer_adversarial_user_guided.sh
 ```
 
 #### Training
-Our networks could be trained end-to-end method. However, we recommend to train **StyleIndicator** and **Decoder** respectively.
+Our networks could be trained with end-to-end manner. However, we recommend to train **StyleIndicator** and **Decoder** respectively.
 
 - (1 step) Train StyleIndicator 
 ```
