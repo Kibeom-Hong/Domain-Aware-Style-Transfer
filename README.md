@@ -17,7 +17,7 @@
 
 ### Dependency
 - Python 3.6
-- CUDA 11.0
+- CUDA 11.1
 - Pytorch 1.7
 - Check the requirements.txt
 
