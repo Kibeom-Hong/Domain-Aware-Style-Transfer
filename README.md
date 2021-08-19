@@ -63,6 +63,12 @@ bash scripts/transfer_user_guided.sh
 bash scripts/transfer_adversarial_user_guided.sh
 ```
 
+#### Inference (Interpolation)
+```
+bash scripts/interpolate.sh
+```
+
+
 #### Training
 Our networks could be trained with end-to-end manner. However, we recommend to train **StyleIndicator** and **Decoder** respectively.
 
