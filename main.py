@@ -17,7 +17,7 @@ if __name__=='__main__':
 	parser.add_argument('--style_dir', type=str, default='../../dataset/wikiart', help='Content data path to train the network')
 
 	######For train arguments#####
-	parser.add_argument('--train_type', type=str, default='split')
+	parser.add_argument('--mode', type=str, default='split')
 	parser.add_argument('--type', type=str, default='train')
 	parser.add_argument('--max_iter', type=int, default=1000)
 	parser.add_argument('--batch_size', type=int, default=4)
@@ -41,17 +41,14 @@ if __name__=='__main__':
 	parser.add_argument('--test_p_reference', type=str, default='./test_images/p_reference/')
 	parser.add_argument('--test_content_segment', type=str, default='./test_images/content/')
 	parser.add_argument('--test_p_reference_segment', type=str, default='./test_images/p_reference/')
+	parser.add_argument('--alpha', type=float, default='1.0')
 
-	parser.add_argument('--DA_Net_trained_epoch', type=int, default='84420')
-	parser.add_argument('--decoder_trained_epoch', type=int, default='50000')
 	
 	args = parser.parse_args()
 
-	if args.train_type == 'split':
+	if args.mode == 'split':
 		from baseline import Baseline as Baseline
-	elif args.train_type == 'total':
-		from baseline_total import Baseline_total as Baseline
-	elif args.train_type == 'seg':
+	elif args.mode == 'seg':
 		from baseline_seg import Baseline_seg as Baseline
 	model = Baseline(args)
 
@@ -61,8 +58,8 @@ if __name__=='__main__':
 		model.train()
 	elif args.type == 'transfer':
 		model.transfer(args)
-	elif args.type == 'transfer_iterative':
-		model.transfer_iterative(args)
+	elif args.type == 'transfer_user_guided':
+		model.transfer_user_guided(args)
 	elif args.type == 'eval':
 		model.eval(args)
 	elif args.type == 'interpolate':

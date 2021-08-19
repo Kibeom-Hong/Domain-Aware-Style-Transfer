@@ -1,5 +1,5 @@
 CUDA_VISIBLE_DEVICES=0 python main.py \
-    --type transfer \
+    --type transfer_user_guided \
     --batch_size 1 \
     --model_type baseline \
     --DA_comment StyleIndicator \
@@ -8,5 +8,6 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     --is_st_train False \
     --test_content './test_images/content/' \
     --test_p_reference './test_images/origin_p_reference/' \
-    --test_a_reference './test_images/origin_a_reference/'           
+    --test_a_reference './test_images/origin_a_reference/'  \
+    --alpha 0.5
 

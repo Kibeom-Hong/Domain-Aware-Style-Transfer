@@ -78,10 +78,6 @@ class Baseline(object):
 		self.MSD_img = MultiScaleImageDiscriminator(nc=3, ndf=64)
 		self.MSD_img.cuda()
 		
-		#self.DA_Net_trained_epoch = args.DA_Net_trained_epoch
-		#self.decoder_trained_epoch = args.decoder_trained_epoch
-
-		
 
 		#######################################
 		####   Loss function, Optimizer    ####
@@ -397,12 +393,12 @@ class Baseline(object):
 			torch.cuda.empty_cache()
 			time.sleep(0.2)
 
-	def transfer_iterative(self, args):
+	def transfer_user_guided(self, args):
 		self.DA_Net.load_state_dict(torch.load(os.path.join(self.result_log_dir, 'style_indicator.pth'))['state_dict'])
 		self.network.load_state_dict(torch.load(os.path.join(self.result_st_dir, 'decoder.pth'))['state_dict'])
 		
 		
-		content_set = Transfer_TestDataset(args.test_content, (256,512), self.cropsize, self.cencrop, is_test=True)
+		content_set = Transfer_TestDataset(args.test_content, (256,512), self.cropsize, self.cencrop, type='art', is_test=True)
 		art_reference_set = Transfer_TestDataset(args.test_a_reference, (256,512), self.cropsize, self.cencrop, type='art', is_test=True)
 		photo_reference_set = Transfer_TestDataset(args.test_p_reference, (256,512), self.cropsize, self.cencrop, type='art', is_test=True)
 		
@@ -416,55 +412,32 @@ class Baseline(object):
 		self.network.train(False)
 		self.network.eval()
 
-		dir_path = os.path.join(self.result_img_dir, 'transfer',  self.DA_comment+'_'+self.ST_comment)
+		dir_path = os.path.join(self.result_img_dir, 'transfer_user_guided', self.DA_comment+'_'+self.ST_comment)
 		if not os.path.exists(dir_path):
 			os.makedirs(dir_path)
 
-		N = content_set.__len__()
-		A_N = art_reference_set.__len__()
-		P_N = photo_reference_set.__len__()
-
+		N = art_reference_set.__len__()
 		content_iter = iter(content_loader)
 		art_iter = iter(art_reference_loader)
-
-		for iteration in range((N//self.batch_size)):
-			empty_segment = np.asarray([])
-			content = next(content_iter).cuda()
-
-			for iter_ref in range(A_N//self.batch_size):
-				a_reference = next(art_iter).cuda()
-				art_alphas = self.get_alphas(a_reference)
-				print(str(iteration), 'art : ' , art_alphas)
-				imsave(self.network(content, a_reference, empty_segment, empty_segment, is_recon=True, alphas=art_alphas, type='photo'),  os.path.join(dir_path,  'single_art_stylized_'+str(iteration)+'_'+str(iter_ref)+'.png'), nrow=self.batch_size )
-				del a_reference
-				torch.cuda.empty_cache()
-				time.sleep(0.2)
-			
-			del content
-			torch.cuda.empty_cache()
-			time.sleep(0.2)			
-			art_iter = iter(art_reference_loader)
-
-
-		content_iter = iter(content_loader)
 		photo_iter = iter(photo_reference_loader)
-		for iteration in range((N//self.batch_size)):
-			empty_segment = np.asarray([])
-			content = next(content_iter).cuda()
-
-			for iter_ref in range(P_N//self.batch_size):
+		for iteration in range(N//self.batch_size):
+			with torch.no_grad():
+				empty_segment = np.asarray([])
+				content = next(content_iter).cuda()
+				a_reference = next(art_iter).cuda()
 				p_reference = next(photo_iter).cuda()
-				photo_alphas = self.get_alphas(p_reference)
-				print(str(iteration), 'photo : ' , photo_alphas)
-				imsave(self.network(content, p_reference, empty_segment, empty_segment, is_recon=True, alphas=photo_alphas, type='photo'),  os.path.join(dir_path, 'single_photo_stylized_'+str(iteration)+'_'+str(iter_ref)+'.png'), nrow=self.batch_size )
+
+				alphas = torch.ones(args.batch_size, 1).repeat(1, 3)*args.alpha
+				art_stylized_output = self.network(content, a_reference, empty_segment, empty_segment, is_recon=True, alphas=alphas, type='photo')
+				photo_stylized_output = self.network(content, p_reference, empty_segment, empty_segment, is_recon=True, alphas=alphas, type='photo')
 				
-				del p_reference
-				torch.cuda.empty_cache()
-				time.sleep(0.1)
-			del content
+				
+			imsave(art_stylized_output,  os.path.join(dir_path,  'single_art_stylized_'+str(iteration)+'.png'), nrow=self.batch_size )
+			imsave(photo_stylized_output,  os.path.join(dir_path, 'single_photo_stylized_'+str(iteration)+'.png'), nrow=self.batch_size )
+			
+			del content, a_reference, p_reference, art_stylized_output, photo_stylized_output
 			torch.cuda.empty_cache()
-			time.sleep(0.1)
-			photo_iter = iter(photo_reference_loader)
+			time.sleep(0.2)
 
 
 	def transfer_seg(self, args):

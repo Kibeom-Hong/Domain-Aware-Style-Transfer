@@ -3,7 +3,7 @@ iters=( 1 )
 for value in "${iters[@]}"
 do
     CUDA_VISIBLE_DEVICES=0 python main.py \
-        --train_type 'seg' \
+        --mode 'seg' \
         --type transfer \
         --batch_size 1 \
         --model_type baseline \
