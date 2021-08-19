@@ -52,6 +52,17 @@ bash scripts/transfer.sh
 bash scripts/transfer_adversarial.sh
 ```
 
+#### Inference (User Guided)
+- Vanilla decoder
+```
+bash scripts/transfer_user_guided.sh
+```
+
+- Decoder with adversarial loss
+```
+bash scripts/transfer_adversarial_user_guided.sh
+```
+
 #### Training
 Available soon
 
