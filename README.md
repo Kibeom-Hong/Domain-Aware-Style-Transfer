@@ -53,12 +53,12 @@ bash scripts/transfer_adversarial.sh
 ```
 
 #### Inference (User Guided)
-- Vanilla decoder
+- Vanilla decoder (You should set --alpha **value** in script file)
 ```
 bash scripts/transfer_user_guided.sh
 ```
 
-- Decoder with adversarial loss
+- Decoder with adversarial loss (You should set --alpha **value** in script file)
 ```
 bash scripts/transfer_adversarial_user_guided.sh
 ```
