@@ -97,6 +97,15 @@ If you find this work useful for your research, please cite:
   year={2021},
   volume={abs/2108.04441}
 }
+
+@InProceedings{Hong_2021_ICCV,
+    author    = {Hong, Kibeom and Jeon, Seogkyu and Yang, Huan and Fu, Jianlong and Byun, Hyeran},
+    title     = {Domain-Aware Universal Style Transfer},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2021},
+    pages     = {14609-14617}
+}
 ```
 
 ## Contact
