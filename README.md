@@ -6,7 +6,7 @@
 
 > ## Domain Aware Universal Style Transfer
 > 
-> Kibeom Hong (Yonsei Univ.), Seogkyu Jeon (Yonsei Univ.), Jianlong Fu (Microsoft Research), Huan Yang (Microsoft Research), Hyeran Byun (Yonsei Univ.)
+> Kibeom Hong (Yonsei Univ.), Seogkyu Jeon (Yonsei Univ.), Huan Yang (Microsoft Research), Jianlong Fu (Microsoft Research), Hyeran Byun (Yonsei Univ.)
 >
 > Paper : https://arxiv.org/abs/2108.04441
 > 
@@ -87,7 +87,7 @@ bash scripts/train_decoder.sh
 Available soon
 
 
-## Ciation
+## Citation
 If you find this work useful for your research, please cite:
 ```
 @article{Hong2021DomainAwareUS,
