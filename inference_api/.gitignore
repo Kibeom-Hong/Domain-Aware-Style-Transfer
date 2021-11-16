@@ -112,25 +112,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-# custom vision training and inference dependencies
-custom_vision/src/module/classifier/model/*
-!custom_vision/src/module/classifier/model/.gitkeep
-custom_vision/src/training/data/*
-!custom_vision/src/training/data/videos
-custom_vision/src/training/data/videos/*
-!custom_vision/src/training/data/videos/.gitkeep
-!custom_vision/src/training/data/labels
-custom_vision/src/training/data/labels/*
-!custom_vision/src/training/data/labels/.gitkeep
-!custom_vision/src/training/data/images
-custom_vision/src/training/data/images/*
-!custom_vision/src/training/data/images/wide_shot
-custom_vision/src/training/data/images/wide_shot/*
-!custom_vision/src/training/data/images/wide_shot/.gitkeep
-!custom_vision/src/training/data/images/close_up
-custom_vision/src/training/data/images/close_up/*
-!custom_vision/src/training/data/images/close_up/.gitkeep
-!custom_vision/src/training/data/images/overhead_shot
-custom_vision/src/training/data/images/overhead_shot/*
-!custom_vision/src/training/data/images/overhead_shot/.gitkeep
