@@ -90,15 +90,6 @@ Available soon
 ## Citation
 If you find this work useful for your research, please cite:
 ```
-@article{Hong2021DomainAwareUS,
-  title={Domain-Aware Universal Style Transfer},
-  author={Kibeom Hong and Seogkyu Jeon and Huan Yang and Jianlong Fu and H. Byun},
-  journal={ArXiv},
-  year={2021},
-  volume={abs/2108.04441}
-}
-```
-```
 @InProceedings{Hong_2021_ICCV,
     author    = {Hong, Kibeom and Jeon, Seogkyu and Yang, Huan and Fu, Jianlong and Byun, Hyeran},
     title     = {Domain-Aware Universal Style Transfer},
@@ -106,6 +97,16 @@ If you find this work useful for your research, please cite:
     month     = {October},
     year      = {2021},
     pages     = {14609-14617}
+}
+```
+
+```
+@article{Hong2021DomainAwareUS,
+  title={Domain-Aware Universal Style Transfer},
+  author={Kibeom Hong and Seogkyu Jeon and Huan Yang and Jianlong Fu and H. Byun},
+  journal={ArXiv},
+  year={2021},
+  volume={abs/2108.04441}
 }
 ```
 
