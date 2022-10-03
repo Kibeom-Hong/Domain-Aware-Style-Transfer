@@ -6,9 +6,11 @@
 
 > ## Domain Aware Universal Style Transfer
 > 
-> Kibeom Hong (Yonsei Univ.), Seogkyu Jeon (Yonsei Univ.), Jianlong Fu (Microsoft Research), Huan Yang (Microsoft Research), Hyeran Byun (Yonsei Univ.)
+> Kibeom Hong (Yonsei Univ.), Seogkyu Jeon (Yonsei Univ.), Huan Yang (Microsoft Research), Jianlong Fu (Microsoft Research), Hyeran Byun (Yonsei Univ.)
 >
-> Paper : https://arxiv.org/abs/2108.04441
+>  Paper : https://openaccess.thecvf.com/content/ICCV2021/html/Hong_Domain-Aware_Universal_Style_Transfer_ICCV_2021_paper.html
+>  
+>  Paper[Arxiv] : https://arxiv.org/abs/2108.04441
 > 
 > **Abstract**: Style transfer aims to reproduce content images with the styles from reference images. Existing universal style transfer methods successfully deliver arbitrary styles to original images either in an artistic or a photo-realistic way. However, the range of “arbitrary style” defined by existing works is bounded in the particular domain due to their structural limitation. Specifically, the degrees of content preservation and stylization are established according to a predefined target domain. As a result, both photo-realistic and artistic models have difficulty in performing the desired style transfer for the other domain. To overcome this limitation, we propose a unified architecture, **D**omain-aware **S**tyle **T**ransfer **N**etworks (**DSTN**) that transfer not only the style but also the property of domain (i.e., domainness) from a given reference image. To this end, we design a novel domainness indicator that captures the domainness value from the texture and structural features of reference images. Moreover, we introduce a unified framework with domain-aware skip connection to adaptively transfer the stroke and palette to the input contents guided by the domainness indicator. Our extensive experiments validate that our model produces better qualitative results and outperforms previous methods in terms of proxy metrics on both artistic and photo-realistic stylizations.
 
@@ -21,7 +23,7 @@ Thank you :)
 
 ### Dependency
 - Python 3.6
-- CUDA 11.0
+- CUDA 11.1
 - Pytorch 1.7
 - Check the requirements.txt
 
@@ -91,8 +93,19 @@ bash scripts/train_decoder.sh
 Available soon
 
 
-## Ciation
+## Citation
 If you find this work useful for your research, please cite:
+```
+@InProceedings{Hong_2021_ICCV,
+    author    = {Hong, Kibeom and Jeon, Seogkyu and Yang, Huan and Fu, Jianlong and Byun, Hyeran},
+    title     = {Domain-Aware Universal Style Transfer},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2021},
+    pages     = {14609-14617}
+}
+```
+
 ```
 @article{Hong2021DomainAwareUS,
   title={Domain-Aware Universal Style Transfer},
