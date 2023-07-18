@@ -19,6 +19,9 @@ Due to the policy change of google-drive which is saving pre-trained weights, it
 If you need pre-trained wieght, please contact us via personal email(cha2068@gmail.com) and we will send it to you right away.
 Thank you :)
 
+:star2: Good News! We accepted one paper (**AesPA-Net**) for artistic style transfer at ICCV 2023!!
+https://github.com/Kibeom-Hong/AesPA-Net
+
 ## Prerequisites
 
 ### Dependency
