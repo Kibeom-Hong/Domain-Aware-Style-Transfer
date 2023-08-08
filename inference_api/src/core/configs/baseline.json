@@ -1,0 +1,11 @@
+{
+    "imsize": 512,
+    "cencrop": "False",
+    "cropsize": 512,
+    "num_workers": 12,
+    "train_result_dir": "results",
+    "pretrained_vgg_checkpoint_path": "apis/baseline_checkpoints/vgg_normalised_conv4_1.t7",
+    "decoder_path": "apis/models/Decoder/log/",
+    "decoder_adversarial_path": "apis/models/Decoder_adversarial/log/",
+    "style_indicator_path": "apis/models/StyleIndicator/log/"
+}

@@ -1,0 +1,9 @@
+{
+    "type": "transfer",
+    "batch_size": 1,
+    "model_type": "baseline",
+    "is_da_train": "False",
+    "is_st_train": "False",
+    "DA_comment": "StyleIndicator",
+    "ST_comment": "Decoder_adversarial"
+}

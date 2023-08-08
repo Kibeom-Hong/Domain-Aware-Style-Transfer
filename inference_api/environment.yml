@@ -1,0 +1,32 @@
+name: domain-aware-style-transfer
+channels:
+  - defaults
+dependencies:
+  - pip=20.0.2
+  - python=3.6.13
+  - pip:
+    - torch==1.7.0
+    - torchvision==0.8.0
+    - tqdm==4.54.1
+    - numpy==1.19.2
+    - pillow==8.0.1
+    - imageio==2.9.0
+    - scipy==1.5.2
+    - torchfile==0.1.0
+    - opencv-python==4.5.4.58
+    - matplotlib==3.3.4
+    - natsort==7.1.1
+    - fastapi==0.68.1
+    - python-multipart==0.0.5
+    - pydantic==1.8.2
+    - python-dotenv==0.19.0
+    - requests==2.26.0
+    - singleton-decorator==1.0.0
+    - starlette==0.14.2
+    - typing-extensions==3.10.0.0
+    - uamqp==1.4.1
+    - urllib3==1.26.6
+    - uvicorn==0.15.0
+    - watchgod==0.7
+    - websockets==9.1
+    - scikit-video==1.1.11
